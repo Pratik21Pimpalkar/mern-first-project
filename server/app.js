@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 // Link Router
 
 app.use(express.json()) 
-app.use(require('./Router/Route'))
+app.use(require('./Router/Auth'))
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -23,12 +23,12 @@ const Navbar = () => {
   )
 }
 
-const NavWrap = styled.ul`
+const NavWrap = styled.nav`
 display: flex;
 justify-content: space-between;
 align-items: center;
 
-padding-top: 1rem;
+padding: 1rem;
 list-style: none;
 
 #logo{

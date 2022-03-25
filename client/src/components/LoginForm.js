@@ -1,28 +1,25 @@
 import React from "react";
-import register from "../Assets/Images/register.webp";
+import login from "../Assets/Images/login.png";
 import styled from "styled-components";
 
-const SignupForm = () => {
+const LoginForm = () => {
   return (
     <>
       <FormBox>
         <FormWrapper>
+          <img src={login} alt="" />
+
           <form action="">
-            <h1>Register Here</h1>
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" placeholder="Your Name Here" />
+            <h1>Login Here</h1>
+            
             <label htmlFor="email">Email</label>
             <input type="text" name="email"  placeholder="Your Email Here" />
             <label htmlFor="password">Password</label>
-            <input type="password" name="password"  placeholder="Your Password Here" />
-            <label htmlFor="cfpassword">Confirm Password</label>
-            <input type="password" name="cfassword"  placeholder="Your Confirm Password Here" />
-            <label htmlFor="work">Work</label>
-            <input type="text" name="work"  placeholder="Your Work Here"/>
-            <button>Register</button>
+            <input type="password" name="password"  placeholder="Your Password Here"/>
+            
+            <button>Login</button>
           </form>
 
-          <img src={register} alt="" />
         </FormWrapper>
       </FormBox>
     </>
@@ -31,7 +28,7 @@ const SignupForm = () => {
 
 const FormBox = styled.div`
   display: flex;
-  height: 100vh;
+    height: 100vh;
   background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3);
   justify-content: center;
   width: 100%;
@@ -39,7 +36,7 @@ const FormBox = styled.div`
 
 const FormWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   width: 80%;
   align-items: center;
 
@@ -95,4 +92,4 @@ const FormWrapper = styled.div`
   }
 `;
 
-export default SignupForm;
+export default LoginForm;

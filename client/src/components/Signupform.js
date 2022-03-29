@@ -44,9 +44,16 @@ const FormWrapper = styled.div`
   align-items: center;
 
   img {
-    width: 60%;
+      /* object-fit: contain; */
+      width: 58%;
+    }
+  @media screen and (max-width: 700px){
+    align-items: initial;
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
   }
-
   form {
     margin-left: 3rem;
     display: flex;

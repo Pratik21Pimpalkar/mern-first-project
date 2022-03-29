@@ -28,7 +28,7 @@ const LoginForm = () => {
 
 const FormBox = styled.div`
   display: flex;
-    height: 100vh;
+  height: 100vh;
   background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3);
   justify-content: center;
   width: 100%;
@@ -40,8 +40,12 @@ const FormWrapper = styled.div`
   width: 80%;
   align-items: center;
 
-  img {
-    width: 60%;
+  @media screen and (max-width: 500px){
+    align-items: initial;
+    img {
+      object-fit: contain;
+      width: 100%;
+    }
   }
 
   form {

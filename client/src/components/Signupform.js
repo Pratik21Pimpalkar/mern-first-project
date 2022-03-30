@@ -1,27 +1,101 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import register from "../Assets/Images/register.webp";
 import styled from "styled-components";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    work: "",
+    password: "",
+    cfpassword: "",
+  });
+
+  let key, value;
+  const registerUser = (e) => {
+    key = e.target.name;
+    value = e.target.value;
+    setUser({ ...user, [key]: value });
+  };
+
+  const PostData = async (e) => {
+    e.preventDefault();
+
+    const { name, email, work, password, cfpassword } = user;
+
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": " application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        work,
+        password,
+        cfpassword,
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data.status);
+    if (res.status === 422 || !data) {
+      window.alert("Registration Unsuccessful ⚠️");
+    } else {
+      window.alert("Registration Successful ✅");
+      navigate("/");
+    }
+  };
   return (
     <>
       <FormBox>
         <FormWrapper>
-          <form action="">
+          <form method="POST" action="">
             <h1>Register Here</h1>
             <label htmlFor="name">Name</label>
-            <input type="text" name="name" placeholder="Your Name Here" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name Here"
+              value={user.name}
+              onChange={registerUser}
+            />
             <label htmlFor="email">Email</label>
-            <input type="text" name="email"  placeholder="Your Email Here" />
+            <input
+              type="text"
+              name="email"
+              placeholder="Your Email Here"
+              value={user.email}
+              onChange={registerUser}
+            />
             <label htmlFor="password">Password</label>
-            <input type="password" name="password"  placeholder="Your Password Here" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Your Password Here"
+              value={user.password}
+              onChange={registerUser}
+            />
             <label htmlFor="cfpassword">Confirm Password</label>
-            <input type="password" name="cfassword"  placeholder="Your Confirm Password Here" />
+            <input
+              type="password"
+              name="cfpassword"
+              placeholder="Your Confirm Password Here"
+              value={user.cfpassword}
+              onChange={registerUser}
+            />
             <label htmlFor="work">Work</label>
-            <input type="text" name="work"  placeholder="Your Work Here"/>
-            <button>Register</button>
+            <input
+              type="text"
+              name="work"
+              placeholder="Your Work Here"
+              value={user.work}
+              onChange={registerUser}
+            />
+            <button onClick={PostData}>Register</button>
           </form>
-
           <img src={register} alt="" />
         </FormWrapper>
       </FormBox>
@@ -44,10 +118,10 @@ const FormWrapper = styled.div`
   align-items: center;
 
   img {
-      /* object-fit: contain; */
-      width: 58%;
-    }
-  @media screen and (max-width: 700px){
+    /* object-fit: contain; */
+    width: 58%;
+  }
+  @media screen and (max-width: 700px) {
     align-items: initial;
     img {
       object-fit: cover;
@@ -79,10 +153,11 @@ const FormWrapper = styled.div`
       border: 1px solid #b195ff;
       font-size: 1.1rem;
       transition: 0.5s ease-in-out all;
-      &:hover,:active,:focus{
-      transform:  translateY(-0.3rem);
-      background: linear-gradient(to left, #acb6e5, #86fde8);
-
+      &:hover,
+      :active,
+      :focus {
+        transform: translateY(-0.3rem);
+        background: linear-gradient(to left, #acb6e5, #86fde8);
       }
     }
 

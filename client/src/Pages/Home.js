@@ -1,17 +1,44 @@
-import React from "react";
-import female from "../Assets/Images/female.png"
+import React, { useEffect, useState } from "react";
 import male from "../Assets/Images/male.png"
 import styled from "styled-components";
 
 const Home = () => {
+  const [userdata, setUserData] = useState({});
+
+  const userDetails = async () => {
+    try {
+      const res = await fetch("/getdata", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      setUserData(data);
+      if (res.status !== 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log(error);
+    
+    }
+  };
+
+  useEffect(() => {
+    userDetails();
+  }, );
   return (
     <HomeWrap>
       <ImgDiv >
-      <img src={male} alt="" srcset="" />
+      <img src={male} alt="" srcSet="" />
       </ImgDiv>
       <h1>
         Hello There!! <br />
-        <span>Your Good Name Here!</span>
+        <span>{userdata.name}</span>
       </h1>
     </HomeWrap>
   );

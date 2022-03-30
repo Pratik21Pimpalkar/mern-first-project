@@ -1,25 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Contactform = () => {
+  const [userdata, setUserData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const userDetails = async () => {
+    try {
+      const res = await fetch("/getdata", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      setUserData({...userdata,name: data.name,email: data.email});
+      if (res.status !== 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    userDetails();
+  });
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const { name, message, email } = userdata;
+    try {
+      const res = await fetch("/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, message, email }),
+      });
+
+      const data = await res.json();
+      if (!data) {
+        console.log("Message not send");
+      } else {
+        window.alert("message send successfully");
+        setUserData({ ...userdata, message: "" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInputs = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setUserData({...userdata,[name]:value})
+  };
+
   return (
     <FormWrapper>
       <div className="formbox">
-        <form action="">
+        <form action="" method="POST">
           <h1>Contact Here</h1>
           <div className="row">
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" placeholder="Your Name Here" />
+              <input type="text" name="name" placeholder="Your Name Here"   onChange={handleInputs}/>
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" placeholder="Your Email Here" />
+              <input type="text" name="email" placeholder="Your Email Here" onChange={handleInputs}  />
             </div>
           </div>
-          <label htmlFor="password">Message</label>
-          <textarea placeholder="Your Message here" />
-          <button>Send Message</button>
+          <label htmlFor="message">Message</label>
+          <textarea
+            placeholder="Your Message here"
+            name="message"
+            onChange={handleInputs}
+          />
+          <button onClick={sendMessage}>Send Message</button>
         </form>
       </div>
     </FormWrapper>
@@ -40,11 +106,10 @@ const FormWrapper = styled.div`
     flex: 1;
     flex-direction: column;
     @media (min-width: 500px) {
-    .row {
+      .row {
         display: flex;
         gap: 2rem;
-        
-    }      
+      }
     }
     div {
       flex: 1;

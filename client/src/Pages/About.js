@@ -1,11 +1,14 @@
-import React from 'react'
-import Bio from '../components/Bio'
+import React from "react";
+
+import Bio from "../components/Bio";
 
 const About = () => {
+  
   return (
-   <>
-   <Bio/></>
-  )
-}
+    <>
+      <Bio />
+    </>
+  );
+};
 
-export default About
+export default About;

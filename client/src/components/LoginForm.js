@@ -1,25 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import login from "../Assets/Images/login.png";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate=useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  let key, value;
+  const loginInput = (e) => {
+    key = e.target.name;
+    value = e.target.value;
+    setUser({...user, [key]: value });
+  };
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    const { email, password } = user;
+    const res = await fetch("/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email, password}),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 400 || !data) {
+      console.log("Invalid Credentials ⚠️. Try Again!!");
+      window.alert("Invalid Credentials ⚠️. Try Again!!");
+    } else {
+      console.log("User Login Successfully");
+      window.alert("User Login Successfully");
+      navigate("/")
+    }
+  };
+
   return (
     <>
       <FormBox>
         <FormWrapper>
           <img src={login} alt="" />
 
-          <form action="">
+          <form method="POST" action="">
             <h1>Login Here</h1>
-            
-            <label htmlFor="email">Email</label>
-            <input type="text" name="email"  placeholder="Your Email Here" />
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password"  placeholder="Your Password Here"/>
-            
-            <button>Login</button>
-          </form>
 
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              value={user.email}
+              onChange={loginInput}
+              placeholder="Your Email Here"
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={user.password}
+              onChange={loginInput}
+              placeholder="Your Password Here"
+            />
+
+            <button onClick={loginUser}>Login</button>
+          </form>
         </FormWrapper>
       </FormBox>
     </>
@@ -28,7 +76,7 @@ const LoginForm = () => {
 
 const FormBox = styled.div`
   display: flex;
-  height: 100vh;
+  height: fit-content;
   background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3);
   justify-content: center;
   width: 100%;
@@ -40,7 +88,7 @@ const FormWrapper = styled.div`
   width: 80%;
   align-items: center;
 
-  @media screen and (max-width: 500px){
+  @media screen and (max-width: 500px) {
     align-items: initial;
     img {
       object-fit: contain;
@@ -73,10 +121,11 @@ const FormWrapper = styled.div`
       border: 1px solid #b195ff;
       font-size: 1.1rem;
       transition: 0.5s ease-in-out all;
-      &:hover,:active,:focus{
-      transform:  translateY(-0.3rem);
-      background: linear-gradient(to left, #acb6e5, #86fde8);
-
+      &:hover,
+      :active,
+      :focus {
+        transform: translateY(-0.3rem);
+        background: linear-gradient(to left, #acb6e5, #86fde8);
       }
     }
 

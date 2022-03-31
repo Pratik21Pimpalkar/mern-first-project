@@ -31,7 +31,9 @@ const Bio = () => {
   };
 
   useEffect(() => {
-    pageAuthenticate();
+  
+      pageAuthenticate();
+   
   });
   return (
     <>
@@ -43,21 +45,7 @@ const Bio = () => {
             <p id="tag">{data.work}</p>
             <hr />
 
-            {/* <p>
-              <span>Unique ID:</span> {data._id}
-            </p>
-            <p>
-              <span>Age:</span> 26 Years
-            </p>
-            <p>
-              <span>Email:</span>{ data.email}
-            </p>
-            <p>
-              <span>Work: </span> {data.work}
-            </p>
-            <p>
-              <span>Hobbies: </span> Music
-            </p> */}
+            
             <Table>
               <tbody>
                 <tr>
@@ -66,7 +54,7 @@ const Bio = () => {
                 </tr>
                 <tr>
                   <th>Age</th>
-                  <td>26</td>
+                  <td>{data.age}</td>
                 </tr>
                 <tr>
                   <th>Email</th>
@@ -91,7 +79,7 @@ const Bio = () => {
 const Table = styled.table`
   text-align: left;
   td {
-    color: #6c6c6c;
+    color: #282e60;
     font-weight: 500;
   }
 
@@ -106,13 +94,13 @@ const Table = styled.table`
 const ProfileWrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: 90vh;
+  /* height: 90vh; */
 `;
 
 const Card = styled.div`
   width: 70%;
   display: flex;
-  box-shadow: 5px 5px 15px #d1d9e6, -5px -5px 15px #fff;
+  box-shadow: 5px 5px 15px #3c5b8f, -5px -5px 15px #6b73e3;
   border-radius: 2rem;
   align-items: center;
   justify-content: center;
@@ -121,6 +109,8 @@ const Card = styled.div`
   flex-wrap: wrap;
   img {
     height: 20rem;
+    filter: drop-shadow( 5px 5px 15px #373d99);
+
     width: 20rem;
     object-fit: cover;
   }
@@ -135,6 +125,11 @@ const Card = styled.div`
     h1 {
       font-family: "Satisfy", "Poppins", cursive;
       color: #002070;
+      font-family: "Satisfy", cursive;
+      color: #fff;
+      font-weight: 700;
+      font-size: 3.8rem;
+
       letter-spacing: 0.3rem;
     }
     p {

@@ -20,7 +20,7 @@ const Contactform = () => {
       });
 
       const data = await res.json();
-      setUserData({...userdata,name: data.name,email: data.email});
+      setUserData({ ...userdata, name: data.name, email: data.email });
       if (res.status !== 200) {
         const error = new Error(res.error);
         throw error;
@@ -32,7 +32,7 @@ const Contactform = () => {
 
   useEffect(() => {
     userDetails();
-  });
+  }, []);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const Contactform = () => {
   const handleInputs = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setUserData({...userdata,[name]:value})
+    setUserData({ ...userdata, [name]: value });
   };
 
   return (
@@ -72,11 +72,23 @@ const Contactform = () => {
           <div className="row">
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" placeholder="Your Name Here"   onChange={handleInputs}/>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name Here"
+                
+                value={userdata.name}
+              />
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" placeholder="Your Email Here" onChange={handleInputs}  />
+              <input
+                type="text"
+                name="email"
+                placeholder="Your Email Here"
+              
+                value={userdata.email}
+              />
             </div>
           </div>
           <label htmlFor="message">Message</label>

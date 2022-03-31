@@ -1,45 +1,57 @@
 import React, { useEffect, useState } from "react";
-import male from "../Assets/Images/male.png"
+import male from "../Assets/Images/male.png";
 import styled from "styled-components";
 
 const Home = () => {
-  const [userdata, setUserData] = useState({});
+  const [userdata, setUserData] = useState("");
 
   const userDetails = async () => {
     try {
       const res = await fetch("/getdata", {
         method: "GET",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
-        credentials: "include",
       });
 
       const data = await res.json();
-      setUserData(data);
+      setUserData({ name: data.name });
       if (res.status !== 200) {
         const error = new Error(res.error);
         throw error;
       }
     } catch (error) {
       console.log(error);
-    
     }
   };
 
   useEffect(() => {
     userDetails();
-  }, );
+  }, []);
   return (
     <HomeWrap>
-      <ImgDiv >
-      <img src={male} alt="" srcSet="" />
-      </ImgDiv>
-      <h1>
-        Hello There!! <br />
-        <span>{userdata.name}</span>
-      </h1>
+      {userdata.name == null ? (
+        <div>
+          <h1>Please Login</h1>
+          <h1>
+            <span></span>
+            <br />
+            <p>This is the MERN Project</p>
+          </h1>
+        </div>
+      ) : (
+        <div>
+          <ImgDiv>
+            <img src={male} alt="" srcSet="" />
+          </ImgDiv>
+          <h1>Hello There!!</h1>
+          <h1>
+            <span>{userdata.name}</span>
+            <br />
+            <p>Pleased to you again!!</p>
+          </h1>
+        </div>
+      )}
     </HomeWrap>
   );
 };
@@ -48,12 +60,13 @@ const ImgDiv = styled.div`
   height: 17rem;
   margin: 2rem;
   width: 17rem;
+
   border-radius: 50%;
-  img{
+  img {
+    /* box-shadow: 5px 5px 15px #3c5b8f, -5px -5px 15px #6b73e3; */
     width: 100%;
+    filter: drop-shadow(5px 5px 15px #373d99);
   }
- 
-  
 `;
 
 const HomeWrap = styled.div`
@@ -61,6 +74,7 @@ const HomeWrap = styled.div`
   gap: 2rem;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
   justify-content: center;
   h1 {
     color: #00005a;
@@ -68,10 +82,15 @@ const HomeWrap = styled.div`
     text-align: center;
     span {
       font-family: "Satisfy", cursive;
-      color: #0c00dc;
-      font-size: 3rem;
-      font-weight: 400;
+      color: #fff;
+      font-weight: 700;
+      font-size: 4.2rem;
       letter-spacing: 0.4rem;
+    }
+    p {
+      font-family: cursive;
+      color: #d9fbff;
+      font-size: 1.4rem;
     }
   }
 `;

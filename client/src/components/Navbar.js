@@ -15,6 +15,8 @@ const Navbar = () => {
         </div>
         <div>
           <Link className="link" to="/login"> <li id='login'>Login</li></Link>
+          
+          <Link className="link" to="/logout"> <li id='login'>Logout</li></Link>
           <Link className="link" to="/signup"><li id='signup'>Sign Up</li></Link>
         </div>
       </NavWrap>

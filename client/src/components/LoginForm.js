@@ -77,7 +77,7 @@ const LoginForm = () => {
 const FormBox = styled.div`
   display: flex;
   height: fit-content;
-  background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3);
+  /* background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3); */
   justify-content: center;
   width: 100%;
 `;

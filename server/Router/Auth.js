@@ -10,9 +10,9 @@ const User = require("../Model/userSchema");
 // Signup
 
 router.post("/signup", async (req, res) => {
-  const { name, email, work, password, cfpassword } = req.body;
+  const { name, email, age, work, password, cfpassword } = req.body;
 
-  if (!name || !email || !work || !password || !cfpassword) {
+  if (!name || !email || !age || !work || !password || !cfpassword) {
     return res
       .status(422)
       .json({ error: "Please fill the credentials properly" });
@@ -31,6 +31,7 @@ router.post("/signup", async (req, res) => {
         email,
         work,
         password,
+        age,
         cfpassword,
       });
 
@@ -82,20 +83,25 @@ router.get("/about", Authenticate, (req, res) => {
   res.send(req.rootUser);
 });
 router.get("/getdata", Authenticate, (req, res) => {
-  res.send(req.UserID);
+  res.send(req.rootUser);
+});
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwtoken", { path: "/" });
+  res.status(200).send("User Logout");
 });
 
 router.post("/contact", Authenticate, async (req, res) => {
   try {
     const { name, email, message } = req.body;
-  
+
     if (!name || !email || !message) {
       console.log("Unable to send msg");
       return res.json({ error: "Unable to send msg" });
     }
 
     const contact = await User.findOne({ _id: req.UserID });
-   
+
     if (contact) {
       const contactMsg = await contact.addMessage(name, email, message);
       await contact.save();

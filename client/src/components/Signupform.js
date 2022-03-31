@@ -9,6 +9,7 @@ const SignupForm = () => {
     name: "",
     email: "",
     work: "",
+    age:"",
     password: "",
     cfpassword: "",
   });
@@ -23,7 +24,7 @@ const SignupForm = () => {
   const PostData = async (e) => {
     e.preventDefault();
 
-    const { name, email, work, password, cfpassword } = user;
+    const { name, email, work,age, password, cfpassword } = user;
 
     const res = await fetch("/signup", {
       method: "POST",
@@ -36,6 +37,7 @@ const SignupForm = () => {
         work,
         password,
         cfpassword,
+        age,
       }),
     });
 
@@ -86,6 +88,14 @@ const SignupForm = () => {
               value={user.cfpassword}
               onChange={registerUser}
             />
+            <label htmlFor="age">Age</label>
+            <input
+              type="number"
+              name="age"
+              placeholder="Your Work Here"
+              value={user.age}
+              onChange={registerUser}
+            />
             <label htmlFor="work">Work</label>
             <input
               type="text"
@@ -106,7 +116,7 @@ const SignupForm = () => {
 const FormBox = styled.div`
   display: flex;
   height: 100vh;
-  background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3);
+  /* background: linear-gradient(to bottom, #e8eff9, #ffffff, #f2fff3); */
   justify-content: center;
   width: 100%;
 `;
